@@ -16,7 +16,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffff', end
             <a class="nav-item nav-link active" href="#">Home</a>
             <a class="nav-item nav-link" href="#">Features</a>
             <a class="nav-item nav-link" href="#">Pricing</a>
-            <a class="nav-item nav-link disabled" href="#">Disabled</a>
+            {% if user == is_authenticated %}
+              <a class="nav-item nav-link" href="{% url 'auth_logout' %}">LogOut</a>
+            {% else %}
+              <a class="nav-item nav-link" href="{% url 'auth_login' %}">LogIn</a>
+            {% endif %}
           </div>
         </div>
       </nav>
