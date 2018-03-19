@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Neighborhood,MyUser
+from .models import Neighborhood,MyUser,Business,Post
 from django.contrib.auth.models import User
 
 # Create your tests here.
@@ -99,3 +99,35 @@ class BusinessTestClass(TestCase):
         self.assertTrue(len(business)<1)
 
 class PostTestClass(TestCase):
+    def setUp(self):
+        #set up user class
+        self.new_user=User(username="vic",email="vic@mail.com")
+        self.new_user.save()
+        #set up neighborhood class
+        self.embakasi = Neighborhood(name='pipeline',location='embakasi',occupants_count=12,admin=self.new_user)
+        self.embakasi.save_neighborhood()
+        #set up editor class
+        self.vick = MyUser(name="Victoria M.",id="32908474",user=self.new_user,neighborhood=self.embakasi)
+        self.vick.save_user()
+        #set up post class
+        self.new_post=Post(post='I am a test post',editor=self.vick)
+
+    def tearDown(self):
+        User.objects.all().delete()
+        Neighborhood.objects.all().delete()
+        MyUser.objects.all().delete()
+        Post.objects.all().delete()
+
+    def test_instance(self):
+        self.assertTrue(isinstance(self.new_post,Post))
+
+    def test_save_post(self):
+        self.new_post.save_post()
+        post =  Post.objects.all()
+        self.assertTrue(len(post)>0)
+
+    def test_delete_post(self):
+        self.grocery.save_post()
+        self.grocery.delete_post()
+        post =  Post.objects.all()
+        self.assertTrue(len(post)<1)

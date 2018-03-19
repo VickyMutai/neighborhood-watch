@@ -72,3 +72,16 @@ class MyUser(models.Model):
 
     def delete_user(self):
         self.delete()
+
+class Post(models.Model):
+    post = models.TextField()
+    editor = models.ForeignKey(MyUser,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.post
+
+    def save_post(self):
+        self.save()
+
+    def delete_post(self):
+        self.delete()
