@@ -41,3 +41,9 @@ class MyUser(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save_user(self):
+        self.save()
+
+    def delete_user(self):
+        self.delete()

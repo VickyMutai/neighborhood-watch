@@ -56,3 +56,13 @@ class MyUserTestClass(TestCase):
     def test_instance(self):
         self.assertTrue(isinstance(self.vick,MyUser))
 
+    def test_save_user(self):
+        self.vick.save_user()
+        users = MyUser.objects.all()
+        self.assertTrue(len(users)>0)
+
+    def test_delete_user(self):
+        self.vick.save_user()
+        self.vick.delete_user()
+        users = MyUser.objects.all()
+        self.assertTrue(len(users)<1)
