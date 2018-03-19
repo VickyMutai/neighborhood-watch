@@ -66,3 +66,36 @@ class MyUserTestClass(TestCase):
         self.vick.delete_user()
         users = MyUser.objects.all()
         self.assertTrue(len(users)<1)
+
+class BusinessTestClass(TestCase):
+    def setUp(self):
+        #set up user class
+        self.new_user=User(username="vic",email="vic@mail.com")
+        self.new_user.save()
+        #set up neighborhood class
+        self.embakasi = Neighborhood(name='pipeline',location='embakasi',occupants_count=12,admin=self.new_user)
+        self.embakasi.save_neighborhood()
+        #set up business class
+        self.grocery = Business(name='grocery',email='my_grocery@mail.com',user=self.new_user,neighborhood=self.embakasi)
+        self.grocery.save()
+
+    def tearDown(self):
+        User.objects.all().delete()
+        Neighborhood.objects.all().delete()
+        Business.objects.all().delete()
+
+    def test_instance(self):
+        self.assertTrue(isinstance(self.grocery,Business))
+
+    def test_save_business(self):
+        self.grocery.save_business()
+        business =  Business.objects.all()
+        self.assertTrue(len(business)>0)
+
+    def test_delete_business(self):
+        self.grocery.save_business()
+        self.grocery.delete_business()
+        business =  Business.objects.all()
+        self.assertTrue(len(business)<1)
+
+class PostTestClass(TestCase):
