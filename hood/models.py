@@ -32,3 +32,12 @@ class Neighborhood(models.Model):
     def update_occupants(cls,id,occupants_count):
         occupied = Neighborhood.objects.filter(id=Neighborhood.id).update(occupants_count=occupants_count)
         return occupied
+
+def MyUser(models.Model):
+    name = models.CharField(max_length=60)
+    id_no = models.CharField(max_length=60)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    neighborhood = models.ForeignKey(Neighborhood,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
