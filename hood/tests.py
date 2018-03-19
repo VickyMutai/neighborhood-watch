@@ -19,3 +19,8 @@ class NeighborhoodTestClass(TestCase):
 
     def test_instance(self):
         self.assertTrue(isinstance(self.embakasi,Neighborhood))
+
+    def test_save_neighborhood(self):
+        self.embakasi.save_neighborhood()
+        neighborhood = Neighborhood.objects.all()
+        self.assertTrue(len(neighborhood)>0)

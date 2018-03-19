@@ -12,4 +12,5 @@ class Neighborhood(models.Model):
     def __str__(self):
         return self.name
     
-    
+    def save_neighborhood(self):
+        self.save()
