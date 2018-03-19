@@ -24,3 +24,9 @@ class NeighborhoodTestClass(TestCase):
         self.embakasi.save_neighborhood()
         neighborhood = Neighborhood.objects.all()
         self.assertTrue(len(neighborhood)>0)
+
+    def test_delete_neighborhood(self):
+        self.embakasi.save_neighborhood()
+        self.embakasi.delete_neighborhood()
+        neighborhood = Neighborhood.objects.all()
+        self.assertTrue(len(neighborhood)<1)

@@ -14,3 +14,6 @@ class Neighborhood(models.Model):
     
     def save_neighborhood(self):
         self.save()
+
+    def delete_neighborhood(self):
+        self.delete()
