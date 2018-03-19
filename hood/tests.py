@@ -30,3 +30,8 @@ class NeighborhoodTestClass(TestCase):
         self.embakasi.delete_neighborhood()
         neighborhood = Neighborhood.objects.all()
         self.assertTrue(len(neighborhood)<1)
+
+    def test_find_neighborhood(self,pk):
+        self.embakasi.save_neighborhood()
+        neighborhood = Neighborhood.find_neighborhood(pk=Neighborhood.pk)
+        self.assertEqual(len(neighborhood),1)

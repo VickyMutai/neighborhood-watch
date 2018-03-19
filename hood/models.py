@@ -17,3 +17,18 @@ class Neighborhood(models.Model):
 
     def delete_neighborhood(self):
         self.delete()
+
+    @classmethod
+    def find_neighborhood(cls,pk):
+        neighborhood=Neighborhood.objects.filter(pk=Neighborhood.pk)
+        return neighborhood
+
+    @classmethod
+    def update_neighborhood(cls,id,name):
+        updated = Neighborhood.objects.filter(id=Neighborhood.id).update(name=name)
+        return updated
+
+    @classmethod
+    def update_occupants(cls,id,occupants_count):
+        occupied = Neighborhood.objects.filter(id=Neighborhood.id).update(occupants_count=occupants_count)
+        return occupied
