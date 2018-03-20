@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .forms import CreateProfileForm
@@ -41,3 +41,21 @@ def view_profile(request):
                                                   "profile":profile,
                                                   "current_user":current_user,
                                                   "posts":posts})
+
+@login_required(login_url='/accounts/login/')
+def neighborhood(request):
+    test="Neighborhood!!"
+    user = MyUser.get_user()
+    count = 0
+    neiba = Neighborhood.get_neighborhood()
+    hood = get_object_or_404(Neighborhood)
+    for me in neiba:
+        for us in user:
+            if us.neighborhood.id == me.id:
+                count += 1
+    hood.occupants_count = count
+    hood.save()
+    return render(request,'neighborhood.html',{"test":test,
+                                                   "me":neiba,
+                                                   "count":count,
+                                                   "user":user,})
