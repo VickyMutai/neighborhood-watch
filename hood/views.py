@@ -4,11 +4,14 @@ from django.contrib.auth.decorators import login_required
 from .forms import CreateProfileForm
 
 # Create your views here.
-#@login_required(login_url='/accounts/login')
+@login_required(login_url='/accounts/login/')
 def index(request):
     test = "Working!!"
-    return render(request,'index.html',{"test":test})
+    current_user = request.user
+    return render(request,'index.html',{"test":test,
+                                        "current_user":current_user})
 
+@login_required(login_url='/accounts/login/')
 def create_profile(request):
     test = "Working!!"
     current_user = request.user
