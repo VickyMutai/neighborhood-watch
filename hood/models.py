@@ -19,6 +19,11 @@ class Neighborhood(models.Model):
         self.delete()
 
     @classmethod
+    def get_neighborhood(cls):
+        hood = Neighborhood.objects.all()
+        return hood
+
+    @classmethod
     def find_neighborhood(cls,pk):
         neighborhood=Neighborhood.objects.filter(pk=Neighborhood.pk)
         return neighborhood
@@ -49,6 +54,11 @@ class Business(models.Model):
         self.delete()
 
     @classmethod
+    def get_business(cls):
+        biz = Business.objects.all()
+        return biz
+
+    @classmethod
     def find_business(cls,search_term):
         business = cls.objects.filter(name__icontains=search_term)
         return business
@@ -73,6 +83,11 @@ class MyUser(models.Model):
 
     def delete_user(self):
         self.delete()
+    
+    @classmethod
+    def get_user(cls):
+        users = MyUser.objects.all()
+        return users
 
 class Post(models.Model):
     post = models.TextField()
@@ -90,3 +105,8 @@ class Post(models.Model):
 
     def delete_post(self):
         self.delete()
+
+    @classmethod
+    def get_post(cls):
+        post = Post.objects.all()
+        return post

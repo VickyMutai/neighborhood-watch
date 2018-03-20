@@ -2,14 +2,19 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .forms import CreateProfileForm
+from .models import MyUser,Neighborhood,Post,Business
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
 def index(request):
     test = "Working!!"
     current_user = request.user
+    profile = MyUser.get_user()
+    post = Post.get_post()
     return render(request,'index.html',{"test":test,
-                                        "current_user":current_user})
+                                        "current_user":current_user,
+                                        "profile":profile,
+                                        "post":post})
 
 @login_required(login_url='/accounts/login/')
 def create_profile(request):
