@@ -60,6 +60,7 @@ class Business(models.Model):
 class MyUser(models.Model):
     name = models.CharField(max_length=60)
     id_no = models.CharField(max_length=60)
+    profille_pic = models.ImageField(upload_to ='pics/',blank=True,null=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     neighborhood = models.ForeignKey(Neighborhood,on_delete=models.CASCADE)
     business = models.ForeignKey(Business,on_delete=models.CASCADE)
@@ -76,9 +77,13 @@ class MyUser(models.Model):
 class Post(models.Model):
     post = models.TextField()
     editor = models.ForeignKey(MyUser,on_delete=models.CASCADE)
+    post_date =  models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.post
+
+    class Meta:
+        ordering=['-post_date']
 
     def save_post(self):
         self.save()
