@@ -10,11 +10,11 @@ def index(request):
     test = "Working!!"
     current_user = request.user
     profile = MyUser.get_user()
-    post = Post.get_post()
+    posts = Post.get_post()
     return render(request,'index.html',{"test":test,
                                         "current_user":current_user,
                                         "profile":profile,
-                                        "post":post})
+                                        "posts":posts})
 
 @login_required(login_url='/accounts/login/')
 def create_profile(request):
