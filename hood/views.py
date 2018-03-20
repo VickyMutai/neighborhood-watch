@@ -45,17 +45,21 @@ def view_profile(request):
 @login_required(login_url='/accounts/login/')
 def neighborhood(request):
     test="Neighborhood!!"
+    current_user = request.user
     user = MyUser.get_user()
+    posts = Post.get_post()
     count = 0
-    neiba = Neighborhood.get_neighborhood()
+    neibahood = Neighborhood.get_neighborhood()
     hood = get_object_or_404(Neighborhood)
-    for me in neiba:
+    for neiba in neibahood:
         for us in user:
-            if us.neighborhood.id == me.id:
+            if us.neighborhood.id == neiba.id:
                 count += 1
     hood.occupants_count = count
     hood.save()
     return render(request,'neighborhood.html',{"test":test,
-                                                   "me":neiba,
+                                                   "hood":neibahood,
                                                    "count":count,
-                                                   "user":user,})
+                                                   "posts":posts,
+                                                   "user":user,
+                                                   "current_user":current_user})
