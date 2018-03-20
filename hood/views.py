@@ -32,6 +32,13 @@ def create_profile(request):
     return render(request,'profile/create.html',{"test":test,"upload_form":form})
 
 @login_required(login_url='/accounts/login/')
+def view_business(request):
+    current_user = request.user
+    biz = Business.get_business()
+    return render(request,'business.html',{"current_user":current_user,
+                                           "business":biz})
+
+@login_required(login_url='/accounts/login/')
 def view_profile(request):
     test="Working!!"
     current_user = request.user
@@ -43,23 +50,32 @@ def view_profile(request):
                                                   "posts":posts})
 
 @login_required(login_url='/accounts/login/')
+def view_hood(request):
+    test="Neighborhood!!"
+    current_user = request.user
+    myuser = MyUser.get_user()
+    posts = Post.get_post()
+    neibahood = Neighborhood.get_neighborhood()
+    return render(request,'neighborhood.html',{"test":test,
+                                                   "hood":neibahood,
+                                                   "posts":posts,
+                                                   "user":myuser,
+                                                   "current_user":current_user})
+
+@login_required(login_url='/accounts/login/')
 def neighborhood(request):
     test="Neighborhood!!"
     current_user = request.user
-    user = MyUser.get_user()
+    myuser = MyUser.get_user()
     posts = Post.get_post()
     count = 0
     neibahood = Neighborhood.get_neighborhood()
     hood = get_object_or_404(Neighborhood)
     for neiba in neibahood:
-        for us in user:
-            if us.neighborhood.id == neiba.id:
+        for user in myuser:
+            if user.neighborhood.id == neiba.id:
                 count += 1
     hood.occupants_count = count
     hood.save()
-    return render(request,'neighborhood.html',{"test":test,
-                                                   "hood":neibahood,
-                                                   "count":count,
-                                                   "posts":posts,
-                                                   "user":user,
-                                                   "current_user":current_user})
+    return redirect('view_neighborhood')
+
