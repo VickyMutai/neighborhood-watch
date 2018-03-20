@@ -7,7 +7,21 @@ background: -o-linear-gradient(45deg, #ff00ff 0%, #00ffff 91%, #00ffff 100%); /*
 background: -ms-linear-gradient(45deg, #ff00ff 0%, #00ffff 91%, #00ffff 100%); /* ie10+ */
 background: linear-gradient(45deg, #ff00ff 0%, #00ffff 91%, #00ffff 100%); /* w3c */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffff', endColorstr='#ff00ff',GradientType=1 ); /* ie6-9 */">
-        <a class="navbar-brand" href="/" style="font-size:30px;font-family: 'Indie Flower', cursive;"><b>Know Your Neighbor</b></a>
+        <a class="navbar-brand" href="/" style="font-size:25px;font-family: 'Indie Flower', cursive;"><b>Know Your Neighbor</b></a>
+        
+        {% if user.is_authenticated %}
+        <div class="col-sm-4 col-md-4">
+          <form action="{% url 'search_results' %}" role="search" class="navbar-form">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search Business" name="biz">
+              <div class="input-group-btn">
+                <button class="btn btn-default" type="submit">Search
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        {% endif %}
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
