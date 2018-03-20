@@ -30,3 +30,14 @@ def create_profile(request):
     else:
         form = CreateProfileForm()
     return render(request,'profile/create.html',{"test":test,"upload_form":form})
+
+@login_required(login_url='/accounts/login/')
+def view_profile(request):
+    test="Working!!"
+    current_user = request.user
+    profile = MyUser.get_user()
+    posts = Post.get_post()
+    return render(request,'profile/profile.html',{"test":test,
+                                                  "profile":profile,
+                                                  "current_user":current_user,
+                                                  "posts":posts})
