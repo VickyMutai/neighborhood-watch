@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from .forms import CreateProfileForm
+from .forms import CreateProfileForm,PostForm
 from .models import MyUser,Neighborhood,Post,Business
 
 # Create your views here.
@@ -26,10 +26,28 @@ def create_profile(request):
             new = form.save(commit=False)
             new.user = current_user
             new.save()
-            return redirect(index)
+            return redirect(view_profile)
     else:
         form = CreateProfileForm()
     return render(request,'profile/create.html',{"test":test,"upload_form":form})
+
+@login_required(login_url='/accounts/login/')
+def new_post(request):
+    current_user = request.user
+    myuser = MyUser.get_user()
+    for user in myuser:
+        if user.user.id == current_user.id:
+            if request.method == 'POST':
+                post_form = PostForm(request.POST,request.FILES)
+                if post_form.is_valid():
+                    post = post_form.save(commit=False)
+                    post.editor = user
+                    post.save()
+                    return redirect(index)
+            else:
+                post_form = PostForm()
+            return render(request,'post.html',{"post_form":post_form})
+        
 
 @login_required(login_url='/accounts/login/')
 def view_business(request):
