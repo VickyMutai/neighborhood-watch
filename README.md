@@ -9,7 +9,7 @@
 
 
 ## How to use
-* Open the site - link [here]()
+* Open the site - link [here](https://hood-watch.herokuapp.com)
 * Create an account if you are new or login to application
 * Create profile by clicking on create profile
 * Write a post
